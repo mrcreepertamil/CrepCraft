@@ -15,16 +15,20 @@ var _foliage_generator := FastNoiseLite.new()
 var _tree_generator := FastNoiseLite.new()
 
 func _init() -> void:
-	_base_generator.seed = generator_seed * 13
+	set_seed(generator_seed)
+
+func set_seed(value: int) -> void:
+	generator_seed = value
+	_base_generator.seed = posmod(value * 13, 2147483647)
 	_base_generator.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	_base_generator.frequency = 0.01
-	_overlay_generator.seed = generator_seed * 79
+	_overlay_generator.seed = posmod(value * 79, 2147483647)
 	_overlay_generator.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	_overlay_generator.frequency = 0.1
-	_foliage_generator.seed = generator_seed * 53
+	_foliage_generator.seed = posmod(value * 53, 2147483647)
 	_foliage_generator.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	_foliage_generator.frequency = 0.05
-	_tree_generator.seed = generator_seed * 139
+	_tree_generator.seed = posmod(value * 139, 2147483647)
 	_tree_generator.noise_type = FastNoiseLite.TYPE_SIMPLEX
 	_tree_generator.frequency = 0.05
 

@@ -1,0 +1,50 @@
+name: Build CrepCraft Android storage plugin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "addons/crepcraft_storage/android/**"
+      - ".github/workflows/build-android-storage-plugin.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Build Android plugin AARs
+        working-directory: addons/crepcraft_storage/android
+        run: gradle :android:assembleDebug :android:assembleRelease
+
+      - name: Copy plugin AARs into the Godot addon
+        run: |
+          mkdir -p addons/crepcraft_storage/bin/debug addons/crepcraft_storage/bin/release
+          cp addons/crepcraft_storage/android/android/build/outputs/aar/android-debug.aar addons/crepcraft_storage/bin/debug/crepcraft-storage-debug.aar
+          cp addons/crepcraft_storage/android/android/build/outputs/aar/android-release.aar addons/crepcraft_storage/bin/release/crepcraft-storage-release.aar
+
+      - name: Commit generated plugin libraries
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add addons/crepcraft_storage/bin
+          if ! git diff --cached --quiet; then
+            git commit -m "Build CrepCraft Android storage plugin"
+            git push
+          fi

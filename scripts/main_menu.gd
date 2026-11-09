@@ -78,10 +78,15 @@ func _on_play_pressed() -> void:
 	if seed_text.is_empty():
 		seed_text = str(randi_range(1, 2147483647))
 	if not seed_text.is_valid_int():
-		_seed_input.placeholder_text = "Please enter a whole-number seed"
+		_seed_input.text = ""
+		_seed_input.placeholder_text = "Enter a whole-number seed"
 		return
 
 	var world_seed := int(seed_text)
+	if world_seed < -2147483648 or world_seed > 2147483647:
+		_seed_input.text = ""
+		_seed_input.placeholder_text = "Seed must be between -2147483648 and 2147483647"
+		return
 	var world := WORLD_SCENE.instantiate() as World
 	var generator := world.get_node("Generator") as Generator
 	var database := world.get_node("Database") as Database

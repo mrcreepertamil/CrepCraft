@@ -37,8 +37,7 @@ func _notification(what: int) -> void:
 
 func _save_session() -> void:
 	if is_instance_valid(_player) and is_instance_valid(_sky) and is_instance_valid(storage):
-		storage.save_player(_player, player_id)
-		storage.save_sky(_sky)
+		storage.save_session(_player, _sky, player_id)
 
 func _in_bounds(index: Vector3i) -> bool:
 	assert(index.y == 0)

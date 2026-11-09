@@ -1,0 +1,5 @@
+{
+  "cow": {"name": "Cow", "category": "passive", "max_health": 10, "movement_speed": 2.0, "drops": [{"item": "leather", "min": 0, "max": 2}]},
+  "sheep": {"name": "Sheep", "category": "passive", "max_health": 8, "movement_speed": 2.2, "drops": [{"item": "wool", "min": 1, "max": 1}]},
+  "zombie": {"name": "Zombie", "category": "hostile", "max_health": 20, "movement_speed": 2.3, "attack_damage": 3}
+}

@@ -9,7 +9,7 @@ class CrepCraftStoragePlugin(godot: Godot) : GodotPlugin(godot) {
 
     @UsedByGodot
     fun getExternalFilesDir(): String {
-        val directory = activity.getExternalFilesDir(null) ?: return ""
+        val directory = activity?.getExternalFilesDir(null) ?: return ""
         return directory.absolutePath
     }
 }

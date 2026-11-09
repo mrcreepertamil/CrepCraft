@@ -1,0 +1,5 @@
+{
+  "oak_planks": {"name": "Oak Planks", "type": "shapeless", "ingredients": [{"item": "oak_log", "count": 1}], "result": {"item": "oak_planks", "count": 4}},
+  "glass": {"name": "Glass", "type": "smelting", "ingredients": [{"item": "sand", "count": 1}], "result": {"item": "glass", "count": 1}},
+  "wooden_pickaxe": {"name": "Wooden Pickaxe", "type": "shaped", "pattern": ["PPP", " S ", " S "], "key": {"P": "oak_planks", "S": "stick"}, "result": {"item": "wooden_pickaxe", "count": 1}}
+}

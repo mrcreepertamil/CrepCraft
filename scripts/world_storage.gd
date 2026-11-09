@@ -114,7 +114,8 @@ func save_player(player: Player, id: int = 0) -> void:
 		"format_version": _format_version,
 		"id": id,
 		"position": [player.position.x, player.position.y, player.position.z],
-		"rotation": [player.rotation.x, player.rotation.y, player.rotation.z]
+		"rotation": [player.rotation.x, player.rotation.y, player.rotation.z],
+		"head_pitch": player.get_node("Head").rotation.x
 	})
 	_mutex.unlock()
 
@@ -128,6 +129,8 @@ func load_player(player: Player, id: int = 0) -> void:
 			player.position = Vector3(float(position[0]), float(position[1]), float(position[2]))
 		if rotation is Array and rotation.size() == 3:
 			player.rotation = Vector3(float(rotation[0]), float(rotation[1]), float(rotation[2]))
+		if data.has("head_pitch"):
+			player.get_node("Head").rotation.x = float(data["head_pitch"])
 	_mutex.unlock()
 
 func save_sky(sky: GDCraftSky) -> void:

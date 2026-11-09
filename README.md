@@ -12,8 +12,11 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.5** and **GDS
 - Persistent worlds
 - Day-and-night cycle
 - Dynamic lighting
+- On-screen touch controls for Android and iOS
 
 ## Controls
+
+### Desktop
 
 | Action | Input |
 | --- | --- |
@@ -28,12 +31,30 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.5** and **GDS
 | Place a block | Right mouse button |
 | Unfocus the game window | Esc |
 
+### Mobile
+
+- **Move:** Drag the virtual joystick in the lower-left corner.
+- **Look around:** Drag on the right side of the screen, above the action buttons.
+- **Break / Place:** Use the on-screen buttons on the right.
+- **Jump / Crouch:** Use the lower-right buttons.
+
+Touch controls appear automatically in Android and iOS builds. Desktop controls remain unchanged.
+
 ## Getting started
 
 1. Install **Godot 4.5**.
 2. Clone or download this repository.
 3. Open the project in Godot by importing the `project.godot` file.
 4. Press **F5** to run the main scene, or **F6** to run the currently open scene.
+
+## Exporting for mobile
+
+1. Install the export templates for your Godot version.
+2. In Godot, open **Project → Export** and add an **Android** preset.
+3. Configure the Android SDK and required build tools in **Editor Settings → Export → Android**.
+4. Export an APK for testing or an AAB for publishing.
+
+An iOS export requires a macOS computer with Xcode configured. Mobile controls are included, but device performance and export settings still need to be tested on the target devices.
 
 ## Built with
 

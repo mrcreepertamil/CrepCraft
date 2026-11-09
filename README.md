@@ -100,7 +100,7 @@ World saves and global resource packs are stored outside Godot internal settings
 
 Existing `user://worlds/` and `user://resource_packs/` content is copied into the new folders when the destination is empty; the originals are left untouched as a backup.
 
-The Android path is provided by the `CrepCraftStorage` Godot Android plugin. Its source is in `addons/crepcraft_storage/android/`; a GitHub Actions workflow builds the debug and release AAR files into `addons/crepcraft_storage/bin/`. Android exports must use the Gradle build option. The Android plugin and exported app still need to be built and tested on a device.
+The Android path is provided by the `CrepCraftStorage` Godot Android plugin. Its source is in `addons/crepcraft_storage/android/`. The GitHub Actions workflow builds the debug and release AAR files and publishes them as the `crepcraft-android-storage-aar` workflow artifact. Download that artifact and copy its `debug/` and `release/` folders into `addons/crepcraft_storage/bin/` before exporting for Android. In the Android export preset, enable **Use Gradle Build**. The Android plugin and exported app still need to be tested on a device.
 
 ## Global resource packs
 

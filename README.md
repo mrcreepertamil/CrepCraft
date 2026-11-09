@@ -33,7 +33,7 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.5** and **GDS
 1. Install **Godot 4.5**.
 2. Clone or download this repository.
 3. Open the project in Godot by importing the `project.godot` file.
-4. Press **F6** to run the current scene, or **F6** / **F5** as appropriate to run the project (F5 runs the configured main scene).
+4. Press **F5** to run the main scene, or **F6** to run the currently open scene.
 
 ## Built with
 

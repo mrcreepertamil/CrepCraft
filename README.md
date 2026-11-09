@@ -8,12 +8,12 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.7** and **GDS
 
 - Seed-based procedural world generation with continental terrain, hills, ridges, caves, biome regions, trees, and vegetation
 - Main menu with random or custom world seeds
-- Separate JSON-based world saves for each seed
-- Per-chunk block overrides, player position, and day/night state saved independently
-- Periodic autosaving and temporary-file save replacement
+- Separate compact binary world saves for each seed
+- Binary chunk files store block overrides; one binary world file stores player and environment state
+- Periodic autosaving and temporary-file binary saves
 - Asynchronous chunk loading
 - Blocks and plants
-- Persistent worlds with human-readable JSON save files
+- Persistent worlds with compact binary save files
 - Day-and-night cycle
 - Dynamic lighting
 - On-screen touch controls for Android and iOS
@@ -29,7 +29,7 @@ CrepCraft includes a Minecraft-inspired JSON content registry. Definitions are s
 - `mobs.json` — example mob attributes and drops
 - `worldgen.json` — default terrain-generation settings
 
-The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. The procedural generator reads its terrain, biome, cave, tree, and foliage settings from `data/worldgen.json`. World saves live in `user://worlds/seed_<seed>/`: `world.json` stores metadata, each chunk has a separate `chunk_x_y_z.json`, `player.json` stores the player transform, and `environment.json` stores time of day. Save access is mutex-protected because chunks load on worker threads. Block removals are saved as explicit empty-block overrides so removed generated blocks stay removed after reloading. Call `GameData.reload()` after changing content JSON files while the game is running.
+The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. The procedural generator reads its terrain, biome, cave, tree, and foliage settings from `data/worldgen.json`. World saves live in `user://worlds/seed_<seed>/`: `world.bin` stores the seed, player transform and time of day; each chunk has a compact `chunk_x_y_z.bin` file containing packed local block indices and block IDs. Files use a versioned binary header, and disk access is mutex-protected because chunks load on worker threads. Block removals are stored as explicit empty-block overrides so removed generated blocks stay removed after reloading. Earlier JSON world saves are not automatically migrated. Call `GameData.reload()` after changing content JSON files while the game is running.
 
 These files establish the data-definition system. Existing block rendering, inventory, crafting, biome selection, and mob gameplay are not yet fully driven by these definitions.
 
@@ -79,7 +79,7 @@ An iOS export requires a macOS computer with Xcode configured. Mobile controls a
 
 - [Godot Engine](https://godotengine.org/) 4.7
 - GDScript
-- Godot's built-in JSON and FileAccess APIs for world persistence
+- Godot's built-in FileAccess binary APIs for world persistence
 
 ## Project structure
 

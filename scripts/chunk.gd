@@ -173,7 +173,7 @@ func mesh(async: bool, force = false) -> void:
 
 func _generate() -> void:
 	_all_blocks = _world.generator.generate(_index)
-	var blocks = _world.database.get_blocks(_index)
+	var blocks = _world.storage.get_blocks(_index)
 	for block in blocks:
 		assert(block.type != Block.Type.EMPTY)
 		var index = Vector3i(block.block_x, block.block_y, block.block_z)

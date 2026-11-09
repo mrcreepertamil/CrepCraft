@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cb7wm23xxaibd" path="res://scenes/player.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://c0ty3ddv0ai0c" path="res://scenes/sky.tscn" id="3_71j4m"]
 [ext_resource type="Script" uid="uid://d1e5o4oltwogc" path="res://scripts/generator.gd" id="3_k0juu"]
-[ext_resource type="Script" uid="uid://blm8g5wvjs8dp" path="res://scripts/database.gd" id="4_71j4m"]
+[ext_resource type="Script" uid="uid://blm8g5wvjs8dp" path="res://scripts/world_storage.gd" id="4_storage"]
 
 [node name="World" type="Node"]
 script = ExtResource("1_nnsk1")
@@ -19,8 +19,8 @@ unload_radius = 18
 script = ExtResource("3_k0juu")
 metadata/_custom_type_script = "uid://d1e5o4oltwogc"
 
-[node name="Database" type="Node" parent="."]
-script = ExtResource("4_71j4m")
+[node name="Storage" type="Node" parent="."]
+script = ExtResource("4_storage")
 metadata/_custom_type_script = "uid://blm8g5wvjs8dp"
 
 [connection signal="set_block" from="Player" to="." method="_on_player_set_block"]

@@ -13,12 +13,16 @@ signal set_block(index: Vector3i, type: Block.Type)
 var _raycast_break_position: Vector3i
 var _raycast_place_position: Vector3i
 var _block_type = Block.Type.GRASS
+var _is_mobile := false
 
 func _init() -> void:
 	position.y = 30
 
 func _ready() -> void:
+	_is_mobile = OS.has_feature("android") or OS.has_feature("ios")
 	_switch_block(0)
+	if not _is_mobile:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _switch_block(delta: int) -> void:
 	var count = Block.Type.COUNT
@@ -27,33 +31,36 @@ func _switch_block(delta: int) -> void:
 	switch_block.emit(_block_type)
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	elif what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+	if what == NOTIFICATION_WM_WINDOW_FOCUS_OUT or what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _input(event: InputEvent) -> void:
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		if event is InputEventMouseMotion:
-			rotate_y(-event.relative.x * rotate_speed)
-			_head.rotate_x(-event.relative.y * rotate_speed)
-	if event is InputEventMouseButton:
+	if event is InputEventScreenDrag and _is_mobile:
+		var viewport_size := get_viewport().get_visible_rect().size
+		if event.position.x > viewport_size.x * 0.48 and event.position.y < viewport_size.y * 0.43:
+			rotate_y(-event.relative.x * rotate_speed * 2.0)
+			_head.rotate_x(-event.relative.y * rotate_speed * 2.0)
+			_head.rotation.x = clampf(_head.rotation.x, deg_to_rad(-89), deg_to_rad(89))
+	elif event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		rotate_y(-event.relative.x * rotate_speed)
+		_head.rotate_x(-event.relative.y * rotate_speed)
+	elif event is InputEventMouseButton:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		if _raycast.is_colliding():
+		if event.pressed and _raycast.is_colliding():
 			if event.is_action_pressed(&"place"):
 				set_block.emit(_raycast_place_position, _block_type)
 			elif event.is_action_pressed(&"break"):
 				set_block.emit(_raycast_break_position, Block.Type.EMPTY)
 		if event.pressed:
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				_switch_block(-event.factor)
+				_switch_block(-int(event.factor))
 			elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				_switch_block(event.factor)
+				_switch_block(int(event.factor))
 	elif event.is_action_pressed(&"unfocus"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _physics_process(_delta) -> void:
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if _is_mobile or Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		var direction = Vector3.ZERO
 		var up = Vector3.ZERO
 		var speed = walk_speed
@@ -76,12 +83,17 @@ func _physics_process(_delta) -> void:
 		direction = (direction + up).normalized()
 		velocity = direction * speed
 		move_and_slide()
+		if _raycast.is_colliding():
+			if Input.is_action_just_pressed(&"break"):
+				set_block.emit(_raycast_break_position, Block.Type.EMPTY)
+			elif Input.is_action_just_pressed(&"place"):
+				set_block.emit(_raycast_place_position, _block_type)
 	_raycast_block.visible = _raycast.is_colliding()
 	if not _raycast.is_colliding():
 		return
 	var ray_position = _raycast.get_collision_point()
 	var ray_normal = _raycast.get_collision_normal()
 	var block_position = Vector3i((ray_position - ray_normal / 2).floor())
-	_raycast_block.global_position = Vector3(block_position) + Vector3(0.5, 0.5, 0.5) 
+	_raycast_block.global_position = Vector3(block_position) + Vector3(0.5, 0.5, 0.5)
 	_raycast_break_position = block_position
 	_raycast_place_position = Vector3i((ray_position + ray_normal / 2).floor())

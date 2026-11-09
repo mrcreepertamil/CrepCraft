@@ -85,8 +85,6 @@ func get_blocks(chunk: Vector3i) -> Array:
 			if coordinates.size() != 3:
 				continue
 			var block_type := int(saved_blocks[key])
-			if block_type == Block.Type.EMPTY:
-				continue
 			result.append({
 				"block_x": int(coordinates[0]),
 				"block_y": int(coordinates[1]),
@@ -104,10 +102,7 @@ func set_block(chunk: Vector3i, block: Vector3i, type: Block.Type) -> void:
 		data = {}
 	var saved_blocks: Dictionary = data.get("blocks", {})
 	var key := _block_key(block)
-	if type == Block.Type.EMPTY:
-		saved_blocks.erase(key)
-	else:
-		saved_blocks[key] = int(type)
+	saved_blocks[key] = int(type)
 	data["format_version"] = _format_version
 	data["blocks"] = saved_blocks
 	_write_json_unlocked(path, data)

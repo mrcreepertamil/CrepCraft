@@ -21,6 +21,5 @@ metadata/_custom_type_script = "uid://d1e5o4oltwogc"
 
 [node name="Storage" type="Node" parent="."]
 script = ExtResource("4_storage")
-metadata/_custom_type_script = "uid://blm8g5wvjs8dp"
 
 [connection signal="set_block" from="Player" to="." method="_on_player_set_block"]

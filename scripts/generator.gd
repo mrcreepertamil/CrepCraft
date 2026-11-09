@@ -13,8 +13,6 @@ var _base_generator := FastNoiseLite.new()
 var _overlay_generator := FastNoiseLite.new()
 var _foliage_generator := FastNoiseLite.new()
 var _tree_generator := FastNoiseLite.new()
-var _current_chunk_world_x: int = 0
-var _current_chunk_world_z: int = 0
 
 func _init() -> void:
 	set_seed(generator_seed)
@@ -35,8 +33,6 @@ func set_seed(value: int) -> void:
 	_tree_generator.frequency = 0.05
 
 func _noise(index: Vector3i, blocks: Dictionary[Vector3i, Block.Type]) -> void:
-	_current_chunk_world_x = index.x * Chunk.WIDTH
-	_current_chunk_world_z = index.z * Chunk.WIDTH
 	var sea_level = 10
 	var start_y = index.y * Chunk.HEIGHT
 	for x in range(0, Chunk.WIDTH):
@@ -62,7 +58,7 @@ func _noise(index: Vector3i, blocks: Dictionary[Vector3i, Block.Type]) -> void:
 					var foliage_noise = _foliage_generator.get_noise_2d(block_x, block_z)
 					var foliage_value = int(foliage_noise * 13793) % 100
 					if foliage_value < 2 and _tree_in_bounds(x, z):
-						_tree(blocks, x, noise - start_y, z)
+						_tree(blocks, x, noise - start_y, z, block_x, block_z)
 					else:
 						_foliage(blocks, block_index + Vector3i.UP, foliage_value)
 				elif y > noise - 4:
@@ -70,11 +66,8 @@ func _noise(index: Vector3i, blocks: Dictionary[Vector3i, Block.Type]) -> void:
 				else:
 					blocks[block_index] = Block.Type.STONE
 
-func _tree(blocks: Dictionary[Vector3i, Block.Type], x: int, y: int, z: int) -> void:
-	# Use world coordinates for tree variation so neighboring chunks do not
-	# repeat the same local-coordinate tree pattern.
-	var world_x = x + _current_chunk_world_x
-	var world_z = z + _current_chunk_world_z
+func _tree(blocks: Dictionary[Vector3i, Block.Type], x: int, y: int, z: int, world_x: int, world_z: int) -> void:
+	# Use world coordinates so tree variation is consistent across chunks.
 	var height = int((_tree_generator.get_noise_2d(world_x, world_z) + 1.0) * 2.0) + 4
 	for i in range(height):
 		var index = Vector3i(x, y + i, z)

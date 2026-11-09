@@ -16,6 +16,21 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.7** and **GDS
 - Dynamic lighting
 - On-screen touch controls for Android and iOS
 
+## JSON content data
+
+CrepCraft includes a Minecraft-inspired JSON content registry. Definitions are stored in `data/`:
+
+- `blocks.json` — block names, hardness, transparency, sprite flags, texture coordinates, and tool tags
+- `items.json` — item names, stack sizes, and block/tool references
+- `biomes.json` — biome climate and vegetation settings
+- `recipes.json` — example shaped, shapeless, and smelting recipe definitions
+- `mobs.json` — example mob attributes and drops
+- `worldgen.json` — default terrain-generation settings
+
+The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. Call `GameData.reload()` after changing JSON files while the game is running.
+
+These files establish the data-definition system. Existing block rendering, inventory, crafting, biome selection, and mob gameplay are not yet fully driven by these definitions.
+
 ## Controls
 
 ### Desktop
@@ -60,7 +75,7 @@ An iOS export requires a macOS computer with Xcode configured. Mobile controls a
 
 ## Built with
 
-- [Godot Engine](https://godotengine.org/) 4.5
+- [Godot Engine](https://godotengine.org/) 4.7
 - GDScript
 - [godot-sqlite](https://github.com/2shady4u/godot-sqlite) for SQLite support
 

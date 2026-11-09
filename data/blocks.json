@@ -1,25 +1,282 @@
 {
-  "grass": {"name": "Grass Block", "hardness": 0.6, "transparent": false, "sprite": false, "texture": [0, 0], "tool": "shovel"},
-  "dirt": {"name": "Dirt", "hardness": 0.5, "transparent": false, "sprite": false, "texture": [1, 0], "tool": "shovel"},
-  "stone": {"name": "Stone", "hardness": 1.5, "transparent": false, "sprite": false, "texture": [3, 0], "tool": "pickaxe"},
-  "water": {"name": "Water", "hardness": 100.0, "transparent": true, "sprite": false, "texture": [4, 0], "tool": "none"},
-  "log": {"name": "Oak Log", "hardness": 2.0, "transparent": false, "sprite": false, "texture": [6, 0], "tool": "axe"},
-  "leaves": {"name": "Leaves", "hardness": 0.2, "transparent": true, "sprite": false, "texture": [7, 0], "tool": "hoe"},
-  "sand": {"name": "Sand", "hardness": 0.5, "transparent": false, "sprite": false, "texture": [8, 0], "tool": "shovel"},
-  "bush": {"name": "Bush", "hardness": 0.1, "transparent": true, "sprite": true, "texture": [9, 0], "tool": "none"},
-  "poppy": {"name": "Poppy", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [10, 0], "tool": "none"},
-  "dandelion": {"name": "Dandelion", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [11, 0], "tool": "none"},
-  "daisy": {"name": "Daisy", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [12, 0], "tool": "none"},
-  "cornflower": {"name": "Cornflower", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [13, 0], "tool": "none"},
-  "marigold": {"name": "Marigold", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [14, 0], "tool": "none"},
-  "lavender": {"name": "Lavender", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [15, 0], "tool": "none"},
-  "red_torch": {"name": "Red Torch", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [1, 1], "tool": "none", "light_color": "#ff0000"},
-  "yellow_torch": {"name": "Yellow Torch", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [0, 1], "tool": "none", "light_color": "#ffff00"},
-  "green_torch": {"name": "Green Torch", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [3, 1], "tool": "none", "light_color": "#00ff00"},
-  "blue_torch": {"name": "Blue Torch", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [2, 1], "tool": "none", "light_color": "#0000ff"},
-  "cyan_torch": {"name": "Cyan Torch", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [4, 1], "tool": "none", "light_color": "#00ffff"},
-  "magenta_torch": {"name": "Magenta Torch", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [5, 1], "tool": "none", "light_color": "#ff00ff"},
-  "white_torch": {"name": "White Torch", "hardness": 0.0, "transparent": true, "sprite": true, "texture": [6, 1], "tool": "none", "light_color": "#ffffff"},
-  "planks": {"name": "Oak Planks", "hardness": 2.0, "transparent": false, "sprite": false, "texture": [7, 1], "tool": "axe"},
-  "glass": {"name": "Glass", "hardness": 0.3, "transparent": true, "sprite": false, "texture": [8, 1], "tool": "pickaxe"}
+  "grass": {
+    "name": "Grass Block",
+    "hardness": 0.6,
+    "transparent": false,
+    "sprite": false,
+    "texture": {
+      "top": [
+        0,
+        0
+      ],
+      "bottom": [
+        1,
+        0
+      ],
+      "side": [
+        2,
+        0
+      ]
+    },
+    "tool": "shovel"
+  },
+  "dirt": {
+    "name": "Dirt",
+    "hardness": 0.5,
+    "transparent": false,
+    "sprite": false,
+    "texture": [
+      1,
+      0
+    ],
+    "tool": "shovel"
+  },
+  "stone": {
+    "name": "Stone",
+    "hardness": 1.5,
+    "transparent": false,
+    "sprite": false,
+    "texture": [
+      3,
+      0
+    ],
+    "tool": "pickaxe"
+  },
+  "water": {
+    "name": "Water",
+    "hardness": 100,
+    "transparent": true,
+    "sprite": false,
+    "texture": [
+      4,
+      0
+    ],
+    "tool": "none"
+  },
+  "log": {
+    "name": "Oak Log",
+    "hardness": 2,
+    "transparent": false,
+    "sprite": false,
+    "texture": {
+      "top": [
+        5,
+        0
+      ],
+      "bottom": [
+        5,
+        0
+      ],
+      "side": [
+        6,
+        0
+      ]
+    },
+    "tool": "axe"
+  },
+  "leaves": {
+    "name": "Leaves",
+    "hardness": 0.2,
+    "transparent": false,
+    "sprite": false,
+    "texture": [
+      7,
+      0
+    ],
+    "tool": "hoe"
+  },
+  "sand": {
+    "name": "Sand",
+    "hardness": 0.5,
+    "transparent": false,
+    "sprite": false,
+    "texture": [
+      8,
+      0
+    ],
+    "tool": "shovel"
+  },
+  "bush": {
+    "name": "Bush",
+    "hardness": 0.1,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      9,
+      0
+    ],
+    "tool": "none"
+  },
+  "poppy": {
+    "name": "Poppy",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      10,
+      0
+    ],
+    "tool": "none"
+  },
+  "dandelion": {
+    "name": "Dandelion",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      11,
+      0
+    ],
+    "tool": "none"
+  },
+  "daisy": {
+    "name": "Daisy",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      12,
+      0
+    ],
+    "tool": "none"
+  },
+  "cornflower": {
+    "name": "Cornflower",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      13,
+      0
+    ],
+    "tool": "none"
+  },
+  "marigold": {
+    "name": "Marigold",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      14,
+      0
+    ],
+    "tool": "none"
+  },
+  "lavender": {
+    "name": "Lavender",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      15,
+      0
+    ],
+    "tool": "none"
+  },
+  "red_torch": {
+    "name": "Red Torch",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      1,
+      1
+    ],
+    "tool": "none",
+    "light_color": "#ff0000"
+  },
+  "yellow_torch": {
+    "name": "Yellow Torch",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      0,
+      1
+    ],
+    "tool": "none",
+    "light_color": "#ffff00"
+  },
+  "green_torch": {
+    "name": "Green Torch",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      3,
+      1
+    ],
+    "tool": "none",
+    "light_color": "#00ff00"
+  },
+  "blue_torch": {
+    "name": "Blue Torch",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      2,
+      1
+    ],
+    "tool": "none",
+    "light_color": "#0000ff"
+  },
+  "cyan_torch": {
+    "name": "Cyan Torch",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      4,
+      1
+    ],
+    "tool": "none",
+    "light_color": "#00ffff"
+  },
+  "magenta_torch": {
+    "name": "Magenta Torch",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      5,
+      1
+    ],
+    "tool": "none",
+    "light_color": "#ff00ff"
+  },
+  "white_torch": {
+    "name": "White Torch",
+    "hardness": 0,
+    "transparent": true,
+    "sprite": true,
+    "texture": [
+      6,
+      1
+    ],
+    "tool": "none",
+    "light_color": "#ffffff"
+  },
+  "planks": {
+    "name": "Oak Planks",
+    "hardness": 2,
+    "transparent": false,
+    "sprite": false,
+    "texture": [
+      7,
+      1
+    ],
+    "tool": "axe"
+  },
+  "glass": {
+    "name": "Glass",
+    "hardness": 0.3,
+    "transparent": true,
+    "sprite": false,
+    "texture": [
+      8,
+      1
+    ],
+    "tool": "pickaxe"
+  }
 }

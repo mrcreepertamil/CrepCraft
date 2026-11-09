@@ -8,12 +8,14 @@ extends Node
 @onready var _player = $Player
 @onready var _sky = $Sky
 @onready var generator = $Generator
-@onready var database = $Database
+@onready var storage: WorldStorage = $Storage
 var _chunks: Dictionary[Vector3i, Chunk] = {}
 var _generate_chunks: Array[Vector3i] = []
 var _mesh_chunks: Array[Vector3i] = []
 var _player_chunk_index = Vector3i.ZERO
 var _task_ids: Dictionary[int, bool] = {}
+var _save_timer := 0.0
+const AUTOSAVE_INTERVAL := 5.0
 	
 func _ready() -> void:
 	var mesh_radius = load_radius - 1
@@ -24,15 +26,19 @@ func _ready() -> void:
 		for y in range(-mesh_radius, mesh_radius + 1):
 			_mesh_chunks.append(Vector3i(x, 0, y))
 	_mesh_chunks.sort_custom(_sort)
-	database.load_player(_player, player_id)
-	database.load_sky(_sky)
+	storage.load_player(_player, player_id)
+	storage.load_sky(_sky)
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_PREDELETE:
 		for task_id in _task_ids:
 			WorkerThreadPool.wait_for_task_completion(task_id)
-		database.save_player(_player, player_id)
-		database.save_sky(_sky)
+		_save_session()
+
+func _save_session() -> void:
+	if is_instance_valid(_player) and is_instance_valid(_sky) and is_instance_valid(storage):
+		storage.save_player(_player, player_id)
+		storage.save_sky(_sky)
 
 func _in_bounds(index: Vector3i) -> bool:
 	assert(index.y == 0)
@@ -113,7 +119,11 @@ func _unload() -> void:
 		remove_child(chunk)
 		WorkerThreadPool.add_task(func(): chunk.free())
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_save_timer += delta
+	if _save_timer >= AUTOSAVE_INTERVAL:
+		_save_timer = 0.0
+		_save_session()
 	_player_chunk_index = Vector3i(_player.position) / Chunk.WIDTH
 	_player_chunk_index.y = 0
 	var _workers = _task_ids.size()
@@ -157,4 +167,4 @@ func _on_player_set_block(index: Vector3i, type: Block.Type) -> void:
 		_remesh(chunk_index - Vector3i(0, 0, 1))
 	elif block_index.z == Chunk.SIZE.z - 1:
 		_remesh(chunk_index + Vector3i(0, 0, 1))
-	database.set_block(chunk_index, block_index, type)
+	storage.set_block(chunk_index, block_index, type)

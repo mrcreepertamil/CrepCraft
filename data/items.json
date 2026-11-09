@@ -1,14 +1,77 @@
 {
-  "grass": {"name": "Grass Block", "max_stack_size": 64, "block": "grass"},
-  "dirt": {"name": "Dirt", "max_stack_size": 64, "block": "dirt"},
-  "stone": {"name": "Stone", "max_stack_size": 64, "block": "stone"},
-  "sand": {"name": "Sand", "max_stack_size": 64, "block": "sand"},
-  "oak_log": {"name": "Oak Log", "max_stack_size": 64, "block": "log"},
-  "oak_planks": {"name": "Oak Planks", "max_stack_size": 64, "block": "planks"},
-  "glass": {"name": "Glass", "max_stack_size": 64, "block": "glass"},
-  "red_torch": {"name": "Red Torch", "max_stack_size": 64, "block": "red_torch"},
-  "yellow_torch": {"name": "Yellow Torch", "max_stack_size": 64, "block": "yellow_torch"},
-  "wooden_pickaxe": {"name": "Wooden Pickaxe", "max_stack_size": 1, "tool": "pickaxe", "tier": 1},
-  "wooden_axe": {"name": "Wooden Axe", "max_stack_size": 1, "tool": "axe", "tier": 1},
-  "wooden_shovel": {"name": "Wooden Shovel", "max_stack_size": 1, "tool": "shovel", "tier": 1}
+  "grass": {
+    "name": "Grass Block",
+    "max_stack_size": 64,
+    "block": "grass"
+  },
+  "dirt": {
+    "name": "Dirt",
+    "max_stack_size": 64,
+    "block": "dirt"
+  },
+  "stone": {
+    "name": "Stone",
+    "max_stack_size": 64,
+    "block": "stone"
+  },
+  "sand": {
+    "name": "Sand",
+    "max_stack_size": 64,
+    "block": "sand"
+  },
+  "oak_log": {
+    "name": "Oak Log",
+    "max_stack_size": 64,
+    "block": "log"
+  },
+  "oak_planks": {
+    "name": "Oak Planks",
+    "max_stack_size": 64,
+    "block": "planks"
+  },
+  "glass": {
+    "name": "Glass",
+    "max_stack_size": 64,
+    "block": "glass"
+  },
+  "red_torch": {
+    "name": "Red Torch",
+    "max_stack_size": 64,
+    "block": "red_torch"
+  },
+  "yellow_torch": {
+    "name": "Yellow Torch",
+    "max_stack_size": 64,
+    "block": "yellow_torch"
+  },
+  "wooden_pickaxe": {
+    "name": "Wooden Pickaxe",
+    "max_stack_size": 1,
+    "tool": "pickaxe",
+    "tier": 1
+  },
+  "wooden_axe": {
+    "name": "Wooden Axe",
+    "max_stack_size": 1,
+    "tool": "axe",
+    "tier": 1
+  },
+  "wooden_shovel": {
+    "name": "Wooden Shovel",
+    "max_stack_size": 1,
+    "tool": "shovel",
+    "tier": 1
+  },
+  "stick": {
+    "name": "Stick",
+    "max_stack_size": 64
+  },
+  "leather": {
+    "name": "Leather",
+    "max_stack_size": 64
+  },
+  "wool": {
+    "name": "Wool",
+    "max_stack_size": 64
+  }
 }

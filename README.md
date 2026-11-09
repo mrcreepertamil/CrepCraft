@@ -8,8 +8,8 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.7** and **GDS
 
 - Seed-based procedural world generation with continental terrain, hills, ridges, caves, biome regions, trees, and vegetation
 - Main menu with random or custom world seeds
-- Separate compact binary world saves for each seed
-- Binary chunk files store block overrides; one binary world file stores player and environment state
+- Minecraft-inspired binary world saves for each seed (`level.dat`, region files, and player data)
+- Region files group many chunks together and store compact block overrides
 - Periodic autosaving and temporary-file binary saves
 - Asynchronous chunk loading
 - Blocks and plants
@@ -29,7 +29,7 @@ CrepCraft includes a Minecraft-inspired JSON content registry. Definitions are s
 - `mobs.json` — example mob attributes and drops
 - `worldgen.json` — default terrain-generation settings
 
-The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. The procedural generator reads its terrain, biome, cave, tree, and foliage settings from `data/worldgen.json`. World saves live in `user://worlds/seed_<seed>/`: `world.bin` stores the seed, player transform and time of day; each chunk has a compact `chunk_x_y_z.bin` file containing packed local block indices and block IDs. Files use a versioned binary header, and disk access is mutex-protected because chunks load on worker threads. Block removals are stored as explicit empty-block overrides so removed generated blocks stay removed after reloading. Earlier JSON world saves are not automatically migrated. Call `GameData.reload()` after changing content JSON files while the game is running.
+The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. The procedural generator reads its terrain, biome, cave, tree, and foliage settings from `data/worldgen.json`. World saves live in `user://worlds/seed_<seed>/` in a Minecraft-inspired layout: `level.dat` stores the world seed and environment time, `playerdata/<id>.dat` stores each player's transform, and `region/r.<x>.<z>.ccr` stores up to 32×32 chunks per region. Region files contain versioned binary chunk records with compact local block indices and block IDs. Disk access is mutex-protected because chunks load on worker threads, and writes use temporary files before replacement. Block removals are stored as explicit empty-block overrides so removed generated blocks stay removed after reloading. This is CrepCraft's own binary format, not Minecraft's NBT format, and older `world.bin` / per-chunk binary saves are not automatically migrated. Call `GameData.reload()` after changing content JSON files while the game is running.
 
 These files establish the data-definition system. Existing block rendering, inventory, crafting, biome selection, and mob gameplay are not yet fully driven by these definitions.
 

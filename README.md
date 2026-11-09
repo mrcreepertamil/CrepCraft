@@ -92,3 +92,18 @@ An iOS export requires a macOS computer with Xcode configured. Mobile controls a
 ## About
 
 CrepCraft is a learning and development project: a Minecraft-inspired sandbox built from the ground up in Godot. Features and details may change as development continues.
+
+
+## Global resource packs
+
+Players can install texture packs without modifying the game files. Open **Resource Packs** from the main menu, then choose **Open Resource Packs Folder**. Create one folder per pack inside `user://resource_packs/` and put a replacement `spritesheet.png` inside it:
+
+```text
+resource_packs/
+  MyTexturePack/
+    spritesheet.png
+  AnotherPack/
+    spritesheet.png
+```
+
+The PNG uses the same tile layout as `resources/spritesheet.png`: each tile is 16×16 pixels, and the image width and height must both be multiples of 16. Keep the existing tile positions so block IDs continue to point at the correct textures. Select the pack in the main menu and press **Apply Resource Pack**. The selected pack is saved in the user's settings and is applied globally to opaque blocks, transparent blocks, and sprite blocks. Choosing **Default** restores the built-in textures.

@@ -29,7 +29,7 @@ CrepCraft includes a Minecraft-inspired JSON content registry. Definitions are s
 - `mobs.json` — example mob attributes and drops
 - `worldgen.json` — default terrain-generation settings
 
-The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. The procedural generator reads its terrain, biome, cave, tree, and foliage settings from `data/worldgen.json`. World saves live in `user://worlds/seed_<seed>/` in a Minecraft-inspired layout: `level.dat` stores the world seed and environment time, `playerdata/<id>.dat` stores each player's transform, and `region/r.<x>.<z>.ccr` stores up to 32×32 chunks per region. Region files contain versioned binary chunk records with compact local block indices and block IDs. Disk access is mutex-protected because chunks load on worker threads, and writes use temporary files before replacement. Block removals are stored as explicit empty-block overrides so removed generated blocks stay removed after reloading. This is CrepCraft's own binary format, not Minecraft's NBT format, and older `world.bin` / per-chunk binary saves are not automatically migrated. Call `GameData.reload()` after changing content JSON files while the game is running.
+The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. The procedural generator reads its terrain, biome, cave, tree, and foliage settings from `data/worldgen.json`. World saves live in `Games/CrepCraft/worlds/seed_<seed>/` in a Minecraft-inspired layout: `level.dat` stores the world seed and environment time, `playerdata/<id>.dat` stores each player's transform, and `region/r.<x>.<z>.ccr` stores up to 32×32 chunks per region. Region files contain versioned binary chunk records with compact local block indices and block IDs. Disk access is mutex-protected because chunks load on worker threads, and writes use temporary files before replacement. Block removals are stored as explicit empty-block overrides so removed generated blocks stay removed after reloading. This is CrepCraft's own binary format, not Minecraft's NBT format, and older `world.bin` / per-chunk binary saves are not automatically migrated. Call `GameData.reload()` after changing content JSON files while the game is running.
 
 These files establish the data-definition system. Existing block rendering, inventory, crafting, biome selection, and mob gameplay are not yet fully driven by these definitions.
 
@@ -94,9 +94,17 @@ An iOS export requires a macOS computer with Xcode configured. Mobile controls a
 CrepCraft is a learning and development project: a Minecraft-inspired sandbox built from the ground up in Godot. Features and details may change as development continues.
 
 
+## Game data folders
+
+World saves and global resource packs are stored outside Godot internal settings storage. On Windows and Linux, the game uses `Games/CrepCraft/` beside the exported executable (or inside the project folder while running from the editor). On Android, it uses the app-specific external files directory returned by Android `getExternalFilesDir(null)`, followed by `Games/CrepCraft/` (typically `Android/data/<package-id>/files/Games/CrepCraft/`). This is limited to CrepCraft’s own app directory and does not request broad access to other apps’ `Android/data` folders. Settings remain in Godot’s internal `user://` storage.
+
+Existing `user://worlds/` and `user://resource_packs/` content is copied into the new folders when the destination is empty; the originals are left untouched as a backup.
+
+The Android path is provided by the `CrepCraftStorage` Godot Android plugin. Its source is in `addons/crepcraft_storage/android/`; a GitHub Actions workflow builds the debug and release AAR files into `addons/crepcraft_storage/bin/`. Android exports must use the Gradle build option. The Android plugin and exported app still need to be built and tested on a device.
+
 ## Global resource packs
 
-Players can install texture packs without modifying the game files. Open **Resource Packs** from the main menu, then choose **Open Resource Packs Folder**. Create one folder per pack inside `user://resource_packs/` and put a replacement `spritesheet.png` inside it:
+Players can install texture packs without modifying the game files. Open **Resource Packs** from the main menu, then choose **Open Resource Packs Folder**. Create one folder per pack inside `Games/CrepCraft/resource_packs/` and put a replacement `spritesheet.png` inside it:
 
 ```text
 resource_packs/

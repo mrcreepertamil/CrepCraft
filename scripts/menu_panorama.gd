@@ -8,6 +8,7 @@ const ROTATION_SPEED := 0.035
 
 var _pivot: Node3D
 var _generator: Generator
+var world_seed := 1337
 
 func _ready() -> void:
 	_build_scene()
@@ -59,7 +60,7 @@ func _build_scene() -> void:
 	_generator = Generator.new()
 	_generator.type = Generator.Type.NOISE
 	add_child(_generator)
-	_generator.set_seed(1337)
+	_generator.set_seed(world_seed)
 	_rebuild_terrain()
 
 func _rebuild_terrain() -> void:

@@ -1,9 +1,7 @@
 extends Node3D
 
 const VIEW_RADIUS := 30
-const WORLD_SIZE := VIEW_RADIUS * 2
 const CAMERA_HEIGHT := 22.0
-const CAMERA_DISTANCE := 0.0
 const ROTATION_SPEED := 0.035
 
 var _pivot: Node3D
@@ -18,6 +16,7 @@ func _process(delta: float) -> void:
 		_pivot.rotate_y(ROTATION_SPEED * delta)
 
 func set_world_seed(value: int) -> void:
+	world_seed = value
 	if is_instance_valid(_generator):
 		_generator.set_seed(value)
 		_rebuild_terrain()

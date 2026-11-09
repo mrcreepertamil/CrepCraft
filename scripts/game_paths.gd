@@ -2,7 +2,8 @@ extends Node
 ## Resolves writable game-data folders for desktop and Android.
 ## Settings intentionally remain in Godot's internal user:// directory.
 
-const GAME_FOLDER_NAME := "Games/CrepCraft"
+const APP_FOLDER_NAME := "CrepCraft"
+const ANDROID_GAME_FOLDER := "Games/CrepCraft"
 const LEGACY_WORLDS := "user://worlds"
 const LEGACY_RESOURCE_PACKS := "user://resource_packs"
 
@@ -22,16 +23,32 @@ func _resolve_game_directory() -> String:
 			var android_storage = Engine.get_singleton("CrepCraftStorage")
 			var external_files_dir := str(android_storage.getExternalFilesDir())
 			if not external_files_dir.is_empty():
-				return external_files_dir.path_join(GAME_FOLDER_NAME)
+				return external_files_dir.path_join(ANDROID_GAME_FOLDER)
 			push_warning("Android external files directory is unavailable; using internal storage.")
 		else:
 			push_warning("CrepCraftStorage Android plugin is unavailable; using internal storage.")
 		return "user://Games/CrepCraft"
 
-	if OS.has_feature("editor"):
-		return ProjectSettings.globalize_path("res://").path_join(GAME_FOLDER_NAME)
+	if OS.has_feature("windows"):
+		var appdata := OS.get_environment("APPDATA")
+		if not appdata.is_empty():
+			return appdata.path_join(APP_FOLDER_NAME)
+		push_warning("APPDATA is not set; falling back to Godot's user data directory.")
+		return OS.get_user_data_dir().path_join("ExternalData")
 
-	return OS.get_executable_path().get_base_dir().path_join(GAME_FOLDER_NAME)
+	if OS.has_feature("linux") or OS.has_feature("bsd"):
+		var data_home := OS.get_environment("XDG_DATA_HOME")
+		if data_home.is_empty():
+			var home := OS.get_environment("HOME")
+			if not home.is_empty():
+				data_home = home.path_join(".local/share")
+		if not data_home.is_empty():
+			return data_home.path_join(APP_FOLDER_NAME)
+		push_warning("XDG_DATA_HOME and HOME are unavailable; falling back to Godot's user data directory.")
+		return OS.get_user_data_dir().path_join("ExternalData")
+
+	# Other desktop platforms keep data in a user-writable application directory.
+	return OS.get_user_data_dir().path_join(APP_FOLDER_NAME)
 
 func get_game_directory() -> String:
 	return _game_directory

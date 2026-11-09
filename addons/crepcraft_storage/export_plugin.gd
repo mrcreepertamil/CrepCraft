@@ -15,10 +15,10 @@ func _exit_tree() -> void:
 class AndroidStorageExportPlugin extends EditorExportPlugin:
 	const PLUGIN_NAME := "CrepCraftStorage"
 
-	func _supports_platform(platform: EditorExportPlatform) -> bool:
+	func _supports_platform(platform) -> bool:
 		return platform is EditorExportPlatformAndroid
 
-	func _get_android_libraries(_platform: EditorExportPlatform, debug: bool) -> PackedStringArray:
+	func _get_android_libraries(_platform, debug: bool) -> PackedStringArray:
 		var variant := "debug" if debug else "release"
 		var library_path := "crepcraft_storage/bin/%s/crepcraft-storage-%s.aar" % [variant, variant]
 		return PackedStringArray([library_path])

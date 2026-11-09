@@ -6,7 +6,7 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.7** and **GDS
 
 ## Features
 
-- Seed-based procedural world generation
+- Seed-based procedural world generation with continental terrain, hills, ridges, caves, biome regions, trees, and vegetation
 - Main menu with random or custom world seeds
 - Separate persistent saves for each seed
 - Asynchronous chunk loading
@@ -27,7 +27,7 @@ CrepCraft includes a Minecraft-inspired JSON content registry. Definitions are s
 - `mobs.json` — example mob attributes and drops
 - `worldgen.json` — default terrain-generation settings
 
-The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. Call `GameData.reload()` after changing JSON files while the game is running.
+The `GameData` autoload reads these files at startup. Scripts can access definitions with `GameData.get_definition("blocks", "grass")`, list IDs with `GameData.get_ids("blocks")`, or retrieve a full category with `GameData.get_category("items")`. The procedural generator reads its terrain, biome, cave, tree, and foliage settings from `data/worldgen.json`. Call `GameData.reload()` after changing JSON files while the game is running.
 
 These files establish the data-definition system. Existing block rendering, inventory, crafting, biome selection, and mob gameplay are not yet fully driven by these definitions.
 

@@ -119,7 +119,7 @@ func _on_play_pressed() -> void:
 	var generator := world.get_node("Generator") as Generator
 	var storage := world.get_node("Storage") as WorldStorage
 	generator.set_seed(world_seed)
-	# Keep the original default save intact for existing installations.
+	# Legacy user:// worlds are copied into this folder on startup.
 	storage.configure(GamePaths.get_worlds_directory().path_join("seed_%d" % world_seed), world_seed)
 	_save_last_seed(world_seed)
 	_menu_layer.hide()

@@ -1,4 +1,20 @@
 {
-  "default": {"sea_level": 10, "base_noise_frequency": 0.01, "overlay_noise_frequency": 0.1, "foliage_noise_frequency": 0.05, "tree_noise_frequency": 0.05, "tree_chance_percent": 2},
+  "default": {
+    "sea_level": 10,
+    "base_height": 13,
+    "continental_amplitude": 15,
+    "detail_amplitude": 5,
+    "ridge_amplitude": 4,
+    "continental_frequency": 0.004,
+    "detail_frequency": 0.025,
+    "ridge_frequency": 0.012,
+    "biome_frequency": 0.0018,
+    "cave_frequency": 0.035,
+    "tree_frequency": 0.08,
+    "flora_frequency": 0.12,
+    "cave_threshold": 0.62,
+    "forest_tree_threshold": 0.62,
+    "plains_tree_threshold": 0.82
+  },
   "generation_types": ["noise", "superflat", "debug"]
 }

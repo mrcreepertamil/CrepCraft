@@ -96,7 +96,7 @@ CrepCraft is a learning and development project: a Minecraft-inspired sandbox bu
 
 ## Game data folders
 
-World saves and global resource packs are stored outside Godot internal settings storage. On Windows and Linux, the game uses `Games/CrepCraft/` beside the exported executable (or inside the project folder while running from the editor). On Android, it uses the app-specific external files directory returned by Android `getExternalFilesDir(null)`, followed by `Games/CrepCraft/` (typically `Android/data/<package-id>/files/Games/CrepCraft/`). This is limited to CrepCraft’s own app directory and does not request broad access to other apps’ `Android/data` folders. Settings remain in Godot’s internal `user://` storage.
+World saves and global resource packs are stored outside Godot internal settings storage. On Windows, the game uses `%APPDATA%/CrepCraft/`. On Linux, it uses `$XDG_DATA_HOME/CrepCraft/`, defaulting to `~/.local/share/CrepCraft/` when `XDG_DATA_HOME` is not set. On Android, it uses the app-specific external files directory returned by Android `getExternalFilesDir(null)`, followed by `Games/CrepCraft/` (typically `Android/data/<package-id>/files/Games/CrepCraft/`). This is limited to CrepCraft’s own app directory and does not request broad access to other apps’ `Android/data` folders. Settings remain in Godot’s internal `user://` storage.
 
 Existing `user://worlds/` and `user://resource_packs/` content is copied into the new folders when the destination is empty; the originals are left untouched as a backup.
 

@@ -27,8 +27,8 @@ func _build_menu() -> void:
 	var panorama := Node3D.new()
 	panorama.name = "MenuPanorama"
 	panorama.set_script(MENU_PANORAMA_SCRIPT)
+	panorama.set("world_seed", _load_last_seed())
 	panorama_viewport.add_child(panorama)
-	panorama.set_world_seed(_load_last_seed())
 
 	var background := ColorRect.new()
 	background.color = Color(0.015, 0.025, 0.04, 0.38)

@@ -6,7 +6,9 @@ A small Minecraft-inspired 3D sandbox project built with **Godot 4.5** and **GDS
 
 ## Features
 
-- Procedurally generated worlds
+- Seed-based procedural world generation
+- Main menu with random or custom world seeds
+- Separate persistent saves for each seed
 - Asynchronous chunk loading
 - Blocks and plants
 - Persistent worlds

@@ -175,9 +175,11 @@ func _generate() -> void:
 	_all_blocks = _world.generator.generate(_index)
 	var blocks = _world.storage.get_blocks(_index)
 	for block in blocks:
-		assert(block.type != Block.Type.EMPTY)
 		var index = Vector3i(block.block_x, block.block_y, block.block_z)
 		assert(in_bounds(index))
+		if block.type == Block.Type.EMPTY:
+			_all_blocks.erase(index)
+			continue
 		_all_blocks[index] = block.type
 		set_light(index, block.type)
 	_end_generate.call_deferred(WorkerThreadPool.get_caller_task_id())

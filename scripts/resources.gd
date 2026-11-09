@@ -5,7 +5,6 @@ const OPAQUE_SHADER = preload("res://resources/opaque.gdshader")
 const TRANSPARENT_SHADER = preload("res://resources/transparent.gdshader")
 const SPRITE_SHADER = preload("res://resources/sprite.gdshader")
 const SIZE := 16
-const PACKS_DIR := "user://resource_packs"
 const SETTINGS_PATH := "user://crepcraft_settings.cfg"
 
 var opaque_material: ShaderMaterial
@@ -17,19 +16,23 @@ func _ready() -> void:
 	_load_active_pack()
 	_rebuild_materials()
 
+func _packs_directory() -> String:
+	return GamePaths.get_resource_packs_directory()
+
 func get_available_packs() -> PackedStringArray:
 	var packs := PackedStringArray(["Default"])
-	var absolute_dir := ProjectSettings.globalize_path(PACKS_DIR)
+	var packs_directory := _packs_directory()
+	var absolute_dir := ProjectSettings.globalize_path(packs_directory)
 	if not DirAccess.dir_exists_absolute(absolute_dir):
 		DirAccess.make_dir_recursive_absolute(absolute_dir)
-	var dir := DirAccess.open(PACKS_DIR)
+	var dir := DirAccess.open(packs_directory)
 	if dir == null:
 		return packs
 	dir.list_dir_begin()
 	var entry := dir.get_next()
 	while not entry.is_empty():
 		if dir.current_is_dir() and not entry.begins_with("."):
-			if FileAccess.file_exists(PACKS_DIR.path_join(entry).path_join("spritesheet.png")):
+			if FileAccess.file_exists(packs_directory.path_join(entry).path_join("spritesheet.png")):
 				packs.append(entry)
 		entry = dir.get_next()
 	dir.list_dir_end()
@@ -55,7 +58,7 @@ func set_active_pack(pack_name: String) -> bool:
 	return true
 
 func get_pack_directory() -> String:
-	return PACKS_DIR
+	return _packs_directory()
 
 func _load_active_pack() -> void:
 	var config := ConfigFile.new()
@@ -67,7 +70,7 @@ func _load_active_pack() -> void:
 func _rebuild_materials() -> void:
 	var spritesheet: Texture2D = DEFAULT_SPRITESHEET
 	if active_pack != "Default":
-		var path := PACKS_DIR.path_join(active_pack).path_join("spritesheet.png")
+		var path := _packs_directory().path_join(active_pack).path_join("spritesheet.png")
 		var image := Image.load_from_file(path)
 		if image != null and not image.is_empty():
 			spritesheet = ImageTexture.create_from_image(image)

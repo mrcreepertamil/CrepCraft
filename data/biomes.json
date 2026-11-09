@@ -1,0 +1,6 @@
+{
+  "plains": {"name": "Plains", "temperature": 0.8, "humidity": 0.4, "surface_block": "grass", "underground_block": "dirt", "vegetation": ["dandelion", "poppy", "daisy"], "tree_density": 0.01},
+  "forest": {"name": "Forest", "temperature": 0.7, "humidity": 0.8, "surface_block": "grass", "underground_block": "dirt", "vegetation": ["bush", "poppy", "daisy"], "tree_density": 0.08},
+  "desert": {"name": "Desert", "temperature": 2.0, "humidity": 0.0, "surface_block": "sand", "underground_block": "sand", "vegetation": [], "tree_density": 0.0},
+  "snowy_plains": {"name": "Snowy Plains", "temperature": 0.0, "humidity": 0.5, "surface_block": "grass", "underground_block": "dirt", "vegetation": [], "tree_density": 0.005}
+}

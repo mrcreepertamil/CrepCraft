@@ -9,6 +9,7 @@ var _joystick_position := Vector2.ZERO
 var _pressed_touches: Dictionary = {}
 
 func _ready() -> void:
+	visible = OS.has_feature("android") or OS.has_feature("ios")
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	queue_redraw()

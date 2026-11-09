@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -39,12 +39,10 @@ jobs:
           cp addons/crepcraft_storage/android/android/build/outputs/aar/android-debug.aar addons/crepcraft_storage/bin/debug/crepcraft-storage-debug.aar
           cp addons/crepcraft_storage/android/android/build/outputs/aar/android-release.aar addons/crepcraft_storage/bin/release/crepcraft-storage-release.aar
 
-      - name: Commit generated plugin libraries
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add addons/crepcraft_storage/bin
-          if ! git diff --cached --quiet; then
-            git commit -m "Build CrepCraft Android storage plugin"
-            git push
-          fi
+      - name: Upload Android plugin binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: crepcraft-android-storage-aar
+          path: addons/crepcraft_storage/bin/
+          if-no-files-found: error
+          retention-days: 30

@@ -1,6 +1,7 @@
 extends Node
 
 const WORLD_SCENE = preload("res://scenes/world.tscn")
+const MENU_PANORAMA_SCRIPT = preload("res://scripts/menu_panorama.gd")
 
 @onready var _menu_layer: CanvasLayer = $MenuLayer
 var _seed_input: LineEdit
@@ -10,9 +11,29 @@ func _ready() -> void:
 	_seed_input.text = str(_load_last_seed())
 
 func _build_menu() -> void:
+	var viewport_container := SubViewportContainer.new()
+	viewport_container.name = "PanoramaView"
+	viewport_container.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	viewport_container.stretch = true
+	viewport_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	$MenuLayer.add_child(viewport_container)
+
+	var panorama_viewport := SubViewport.new()
+	panorama_viewport.size = Vector2i(1600, 900)
+	panorama_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	panorama_viewport.handle_input_locally = false
+	viewport_container.add_child(panorama_viewport)
+
+	var panorama := Node3D.new()
+	panorama.name = "MenuPanorama"
+	panorama.set_script(MENU_PANORAMA_SCRIPT)
+	panorama_viewport.add_child(panorama)
+	panorama.set_world_seed(_load_last_seed())
+
 	var background := ColorRect.new()
-	background.color = Color(0.035, 0.055, 0.075, 1.0)
+	background.color = Color(0.015, 0.025, 0.04, 0.38)
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	$MenuLayer.add_child(background)
 
 	var center := CenterContainer.new()

@@ -67,7 +67,7 @@ func _read_level_unlocked() -> void:
 	if file == null:
 		push_error("Could not read level.dat.")
 		return
-	if file.get_length() < 19 or file.get_32() != LEVEL_MAGIC:
+	if file.get_length() < 15 or file.get_32() != LEVEL_MAGIC:
 		push_error("level.dat has an invalid or truncated header.")
 		file.close()
 		return
@@ -213,7 +213,7 @@ func load_player(player: Player, id: int = 0) -> void:
 		push_error("Could not read player data: " + path)
 		_mutex.unlock()
 		return
-	if file.get_length() < 50 or file.get_32() != PLAYER_MAGIC:
+	if file.get_length() < 38 or file.get_32() != PLAYER_MAGIC:
 		push_error("Invalid player data file: " + path)
 		file.close()
 		_mutex.unlock()

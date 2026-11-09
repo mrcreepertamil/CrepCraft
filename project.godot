@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GamePaths="*res://scripts/game_paths.gd"
 GDCraftResources="*res://scripts/resources.gd"
 GameData="*res://scripts/json_data.gd"
 
@@ -30,7 +31,7 @@ window/vsync/vsync_mode=3
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/crepcraft_storage/plugin.cfg")
 
 [input]
 

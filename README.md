@@ -1,14 +1,54 @@
-# GDCraft
+# CrepCraft
 
-![](doc/image.png)
+A small Minecraft-inspired 3D sandbox project built with **Godot 4.5** and **GDScript**.
 
-Tiny Minecraft clone in Godot using GDScript
+![CrepCraft screenshot](doc/image.png)
 
-# Features
+## Features
 
-- Procedural world generation
+- Procedurally generated worlds
 - Asynchronous chunk loading
 - Blocks and plants
 - Persistent worlds
-- Day and night cycle
+- Day-and-night cycle
 - Dynamic lighting
+
+## Controls
+
+| Action | Input |
+| --- | --- |
+| Move forward | W |
+| Move backward | S |
+| Move left | A |
+| Move right | D |
+| Jump | Space or E |
+| Crouch | Q or Ctrl |
+| Sprint | F or Shift |
+| Break a block | Left mouse button |
+| Place a block | Right mouse button |
+| Unfocus the game window | Esc |
+
+## Getting started
+
+1. Install **Godot 4.5**.
+2. Clone or download this repository.
+3. Open the project in Godot by importing the `project.godot` file.
+4. Press **F6** to run the current scene, or **F6** / **F5** as appropriate to run the project (F5 runs the configured main scene).
+
+## Built with
+
+- [Godot Engine](https://godotengine.org/) 4.5
+- GDScript
+- [godot-sqlite](https://github.com/2shady4u/godot-sqlite) for SQLite support
+
+## Project structure
+
+- `scenes/` — Godot scenes
+- `scripts/` — GDScript source files
+- `resources/` — project resources
+- `addons/` — editor add-ons
+- `doc/` — documentation and images
+
+## About
+
+CrepCraft is a learning and development project: a Minecraft-inspired sandbox built from the ground up in Godot. Features and details may change as development continues.

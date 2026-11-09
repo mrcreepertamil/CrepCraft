@@ -1,0 +1,118 @@
+# CrepCraft English (United States) language file
+# Format: translation.key=value
+# Keep keys stable; values may be translated in other locale files.
+
+# Main menu
+menu.title=CREPCRAFT
+menu.subtitle=A world of your own.
+menu.world_seed=World Seed
+menu.seed_placeholder=Enter a number or generate one
+menu.random_seed=Random Seed
+menu.play_load_world=Play / Load World
+menu.seed_hint=Using the same seed opens the same saved world.
+menu.quit=Quit
+menu.seed_error_integer=Enter a whole-number seed
+menu.seed_error_range=Seed must be between -2147483648 and 2147483647
+
+# Common interface
+gui.back=Back
+gui.cancel=Cancel
+gui.confirm=Confirm
+gui.done=Done
+gui.close=Close
+gui.loading=Loading...
+gui.error=Error
+gui.yes=Yes
+gui.no=No
+
+# World
+world.name=World
+world.new=Create New World
+world.load=Load World
+world.delete=Delete World
+world.rename=Rename World
+world.seed=Seed
+world.generating=Generating world...
+world.saving=Saving world...
+world.saved=World saved
+world.save_failed=Could not save the world.
+
+# Blocks
+block.crepcraft.grass=Grass Block
+block.crepcraft.dirt=Dirt
+block.crepcraft.stone=Stone
+block.crepcraft.water=Water
+block.crepcraft.log=Oak Log
+block.crepcraft.leaves=Leaves
+block.crepcraft.sand=Sand
+block.crepcraft.bush=Bush
+block.crepcraft.poppy=Poppy
+block.crepcraft.dandelion=Dandelion
+block.crepcraft.daisy=Daisy
+block.crepcraft.cornflower=Cornflower
+block.crepcraft.marigold=Marigold
+block.crepcraft.lavender=Lavender
+block.crepcraft.red_torch=Red Torch
+block.crepcraft.yellow_torch=Yellow Torch
+block.crepcraft.green_torch=Green Torch
+block.crepcraft.blue_torch=Blue Torch
+block.crepcraft.cyan_torch=Cyan Torch
+block.crepcraft.magenta_torch=Magenta Torch
+block.crepcraft.white_torch=White Torch
+block.crepcraft.planks=Oak Planks
+block.crepcraft.glass=Glass
+
+# Items
+item.crepcraft.grass=Grass Block
+item.crepcraft.dirt=Dirt
+item.crepcraft.stone=Stone
+item.crepcraft.sand=Sand
+item.crepcraft.oak_log=Oak Log
+item.crepcraft.oak_planks=Oak Planks
+item.crepcraft.glass=Glass
+item.crepcraft.red_torch=Red Torch
+item.crepcraft.yellow_torch=Yellow Torch
+item.crepcraft.wooden_pickaxe=Wooden Pickaxe
+item.crepcraft.wooden_axe=Wooden Axe
+item.crepcraft.wooden_shovel=Wooden Shovel
+item.crepcraft.stick=Stick
+item.crepcraft.leather=Leather
+item.crepcraft.wool=Wool
+
+# Biomes
+biome.crepcraft.plains=Plains
+biome.crepcraft.forest=Forest
+biome.crepcraft.desert=Desert
+biome.crepcraft.snowy_plains=Snowy Plains
+
+# Mobs
+entity.crepcraft.cow=Cow
+entity.crepcraft.sheep=Sheep
+entity.crepcraft.zombie=Zombie
+
+# Tools and materials
+tool.crepcraft.pickaxe=Pickaxe
+tool.crepcraft.axe=Axe
+tool.crepcraft.shovel=Shovel
+tool.crepcraft.hoe=Hoe
+tool.crepcraft.none=No Tool Required
+
+# Controls
+controls.move_forward=Move Forward
+controls.move_backward=Move Backward
+controls.move_left=Move Left
+controls.move_right=Move Right
+controls.jump=Jump
+controls.crouch=Crouch
+controls.sprint=Sprint
+controls.break=Break Block
+controls.place=Place Block
+controls.unfocus=Unfocus Game Window
+controls.look=Look Around
+controls.joystick=Move
+
+# Gameplay messages
+message.inventory_full=Inventory is full.
+message.not_enough_items=Not enough items.
+message.recipe_unavailable=Recipe is unavailable.
+message.feature_unavailable=This feature is not available yet.

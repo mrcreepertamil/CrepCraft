@@ -5,6 +5,8 @@ const MENU_PANORAMA_SCRIPT = preload("res://scripts/menu_panorama.gd")
 
 @onready var _menu_layer: CanvasLayer = $MenuLayer
 var _seed_input: LineEdit
+var _pack_picker: OptionButton
+var _pack_window: Window
 
 func _ready() -> void:
 	_build_menu()
@@ -80,6 +82,11 @@ func _build_menu() -> void:
 	play_button.pressed.connect(_on_play_pressed)
 	layout.add_child(play_button)
 
+	var packs_button := Button.new()
+	packs_button.text = "Resource Packs"
+	packs_button.pressed.connect(_open_resource_packs)
+	layout.add_child(packs_button)
+
 	var hint := Label.new()
 	hint.text = "Using the same seed opens the same saved world."
 	hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -130,3 +137,63 @@ func _save_last_seed(value: int) -> void:
 	var error := config.save("user://crepcraft_settings.cfg")
 	if error != OK:
 		push_warning("Could not save the last used world seed.")
+
+func _open_resource_packs() -> void:
+	if _pack_window == null:
+		_build_resource_pack_window()
+	_refresh_resource_pack_list()
+	_pack_window.popup_centered()
+
+func _build_resource_pack_window() -> void:
+	_pack_window = Window.new()
+	_pack_window.title = "Global Resource Packs"
+	_pack_window.size = Vector2i(440, 230)
+	_pack_window.transient = true
+	_pack_window.exclusive = true
+	add_child(_pack_window)
+
+	var layout := VBoxContainer.new()
+	layout.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	layout.add_theme_constant_override("separation", 12)
+	layout.add_theme_constant_override("margin_left", 16)
+	layout.add_theme_constant_override("margin_top", 16)
+	layout.add_theme_constant_override("margin_right", 16)
+	layout.add_theme_constant_override("margin_bottom", 16)
+	_pack_window.add_child(layout)
+
+	var description := Label.new()
+	description.text = "Choose a pack to change textures throughout CrepCraft."
+	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	layout.add_child(description)
+
+	_pack_picker = OptionButton.new()
+	layout.add_child(_pack_picker)
+
+	var apply_button := Button.new()
+	apply_button.text = "Apply Resource Pack"
+	apply_button.pressed.connect(_apply_resource_pack)
+	layout.add_child(apply_button)
+
+	var folder_button := Button.new()
+	folder_button.text = "Open Resource Packs Folder"
+	folder_button.pressed.connect(_open_resource_pack_folder)
+	layout.add_child(folder_button)
+
+func _refresh_resource_pack_list() -> void:
+	_pack_picker.clear()
+	var packs := GDCraftResources.get_available_packs()
+	for pack in packs:
+		_pack_picker.add_item(pack)
+		if pack == GDCraftResources.active_pack:
+			_pack_picker.select(_pack_picker.item_count - 1)
+
+func _apply_resource_pack() -> void:
+	var selected := _pack_picker.get_item_text(_pack_picker.selected)
+	if GDCraftResources.set_active_pack(selected):
+		_pack_window.title = "Applied: " + selected
+		_pack_window.hide()
+
+func _open_resource_pack_folder() -> void:
+	var folder := ProjectSettings.globalize_path(GDCraftResources.get_pack_directory())
+	DirAccess.make_dir_recursive_absolute(folder)
+	OS.shell_open(folder)

@@ -60,7 +60,7 @@ func _read_world_unlocked() -> void:
 	if file == null:
 		push_error("Could not read binary world save.")
 		return
-	if file.get_length() < 15:
+	if file.get_length() < 16:
 		push_error("World save is too short or corrupted.")
 		return
 	if file.get_32() != WORLD_MAGIC:
@@ -170,10 +170,11 @@ func set_block(chunk: Vector3i, block: Vector3i, type: Block.Type) -> void:
 			var count := existing.get_32()
 			if version == FORMAT_VERSION and count <= Chunk.WIDTH * Chunk.HEIGHT * Chunk.WIDTH and existing.get_length() >= CHUNK_HEADER_SIZE + count * CHUNK_ENTRY_SIZE:
 				for _i in range(count):
-					var local_index := int(existing.get_16())
+					var saved_index := int(existing.get_16())
 					var block_type := int(existing.get_8())
-					if local_index < Chunk.WIDTH * Chunk.HEIGHT * Chunk.WIDTH and block_type <= Block.Type.EMPTY:
-						saved_blocks[local_index] = block_type
+					if saved_index < Chunk.WIDTH * Chunk.HEIGHT * Chunk.WIDTH and block_type <= Block.Type.EMPTY:
+						saved_blocks[saved_index] = block_type
+			existing.close()
 	var local_index := block.y * Chunk.WIDTH * Chunk.WIDTH + block.z * Chunk.WIDTH + block.x
 	saved_blocks[local_index] = int(type)
 	var temporary_path := path + ".tmp"

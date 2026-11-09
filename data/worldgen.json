@@ -1,0 +1,4 @@
+{
+  "default": {"sea_level": 10, "base_noise_frequency": 0.01, "overlay_noise_frequency": 0.1, "foliage_noise_frequency": 0.05, "tree_noise_frequency": 0.05, "tree_chance_percent": 2},
+  "generation_types": ["noise", "superflat", "debug"]
+}

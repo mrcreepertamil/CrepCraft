@@ -89,10 +89,10 @@ func _on_play_pressed() -> void:
 		return
 	var world := WORLD_SCENE.instantiate() as World
 	var generator := world.get_node("Generator") as Generator
-	var database := world.get_node("Database") as Database
+	var storage := world.get_node("Storage") as WorldStorage
 	generator.set_seed(world_seed)
 	# Keep the original default save intact for existing installations.
-	database.path = "user://gdcraft.sqlite" if world_seed == 1337 else "user://crepcraft_world_%d.sqlite" % world_seed
+	storage.configure("user://worlds/seed_%d" % world_seed, world_seed)
 	_save_last_seed(world_seed)
 	_menu_layer.hide()
 	add_child(world)

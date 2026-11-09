@@ -1,7 +1,7 @@
 package com.afcreeper.crepcraft.storage
 
 import android.app.Activity
-import com.godot.game.Godot
+import org.godotengine.godot.Godot
 import org.godotengine.godot.plugin.GodotPlugin
 import org.godotengine.godot.plugin.UsedByGodot
 

@@ -1,6 +1,6 @@
 # CrepCraft
 
-A small Minecraft-inspired 3D sandbox project built with **Godot 4.5** and **GDScript**.
+A small Minecraft-inspired 3D sandbox project built with **Godot 4.7** and **GDScript**.
 
 ![CrepCraft screenshot](doc/image.png)
 
@@ -44,7 +44,7 @@ Touch controls appear automatically in Android and iOS builds. Desktop controls 
 
 ## Getting started
 
-1. Install **Godot 4.5**.
+1. Install **Godot 4.7**.
 2. Clone or download this repository.
 3. Open the project in Godot by importing the `project.godot` file.
 4. Press **F5** to run the main scene, or **F6** to run the currently open scene.

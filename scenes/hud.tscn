@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://djoroyuhin570"]
+[gd_scene load_steps=5 format=3 uid="uid://djoroyuhin570"]
 
 [ext_resource type="Script" uid="uid://b4giugoepobrn" path="res://scripts/hud.gd" id="1_ahhtf"]
 [ext_resource type="Texture2D" uid="uid://bo5jyyqj4sg3" path="res://resources/spritesheet.png" id="2_oo0fn"]
+[ext_resource type="Script" path="res://scripts/mobile_controls.gd" id="3_mobile"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oo0fn"]
 atlas = ExtResource("2_oo0fn")
@@ -15,6 +16,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ahhtf")
+
+[node name="MobileControls" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("3_mobile")
 
 [node name="Stats" type="VBoxContainer" parent="."]
 visible = false

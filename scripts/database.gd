@@ -1,72 +1,44 @@
 class_name Database
 extends Node
 
-@export var path = "user://gdcraft.sqlite"
+@export var path = "user://crepcraft_world_1337.sqlite"
 var _database: SQLite = null
 var _mutex = Mutex.new()
 
 func _init() -> void:
 	_database = SQLite.new()
-	_database.path = path
 	_database.verbosity_level = SQLite.VerbosityLevel.NORMAL
+
+func _ready() -> void:
+	_database.path = path
 	if not _database.open_db():
 		push_error("Failed to open database: " + path)
-	var blocks_table = """
-		CREATE TABLE IF NOT EXISTS blocks (
-			chunk_x INTEGER NOT NULL,
-			chunk_y INTEGER NOT NULL,
-			chunk_z INTEGER NOT NULL,
-			block_x INTEGER NOT NULL,
-			block_y INTEGER NOT NULL,
-			block_z INTEGER NOT NULL,
+		return
+	var statements = [
+		"""CREATE TABLE IF NOT EXISTS blocks (
+			chunk_x INTEGER NOT NULL, chunk_y INTEGER NOT NULL, chunk_z INTEGER NOT NULL,
+			block_x INTEGER NOT NULL, block_y INTEGER NOT NULL, block_z INTEGER NOT NULL,
 			type INTEGER NOT NULL,
 			PRIMARY KEY (chunk_x, chunk_y, chunk_z, block_x, block_y, block_z)
-		);
-	"""
-	if not _database.query(blocks_table):
-		push_error("Failed to create blocks table")
-	var blocks_index = """
-		CREATE INDEX IF NOT EXISTS blocks_index
-		ON blocks (chunk_x, chunk_y, chunk_z);
-	"""
-	if not _database.query(blocks_index):
-		push_error("Failed to create blocks index")
-	var players_table = """
-		CREATE TABLE IF NOT EXISTS players (
+		);""",
+		"""CREATE INDEX IF NOT EXISTS blocks_index ON blocks (chunk_x, chunk_y, chunk_z);""",
+		"""CREATE TABLE IF NOT EXISTS players (
 			id INTEGER PRIMARY KEY,
-			position_x INTEGER NOT NULL,
-			position_y INTEGER NOT NULL,
-			position_z INTEGER NOT NULL,
-			rotation_x INTEGER NOT NULL,
-			rotation_y INTEGER NOT NULL,
-			rotation_z INTEGER NOT NULL
-		);
-	"""
-	if not _database.query(players_table):
-		push_error("Failed to create players table")
-	var players_index = """
-		CREATE INDEX IF NOT EXISTS players_index
-		ON players (id);
-	"""
-	if not _database.query(players_index):
-		push_error("Failed to create players index")
-	var sky_table = """
-		CREATE TABLE IF NOT EXISTS sky (
-			id INTEGER PRIMARY KEY,
-			time_of_day INTEGER NOT NULL
-		);
-	"""
-	if not _database.query(sky_table):
-		push_error("Failed to create sky table")
-	var sky_index = """
-		CREATE INDEX IF NOT EXISTS sky_index
-		ON sky (id);
-	"""
-	if not _database.query(sky_index):
-		push_error("Failed to create sky index")
+			position_x REAL NOT NULL, position_y REAL NOT NULL, position_z REAL NOT NULL,
+			rotation_x REAL NOT NULL, rotation_y REAL NOT NULL, rotation_z REAL NOT NULL
+		);""",
+		"""CREATE INDEX IF NOT EXISTS players_index ON players (id);""",
+		"""CREATE TABLE IF NOT EXISTS sky (
+			id INTEGER PRIMARY KEY, time_of_day REAL NOT NULL
+		);""",
+		"""CREATE INDEX IF NOT EXISTS sky_index ON sky (id);"""
+	]
+	for statement in statements:
+		if not _database.query(statement):
+			push_error("Failed to initialize world database")
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_PREDELETE:
+	if what == NOTIFICATION_PREDELETE and _database != null:
 		_mutex.lock()
 		_database.close_db()
 		_database = null
